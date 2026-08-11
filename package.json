@@ -1,0 +1,11 @@
+{
+  "name": "ema-medicines-search",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:data": "node scripts/build-data.mjs",
+    "test": "node --test",
+    "serve": "python3 -m http.server 4173"
+  }
+}
