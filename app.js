@@ -14,6 +14,11 @@ const elements = {
   pageInfo: document.querySelector("#page-info"),
   empty: document.querySelector("#empty-state"),
   error: document.querySelector("#error-state"),
+  install: document.querySelector("#install-app"),
+  installDialog: document.querySelector("#install-dialog"),
+  installInstructions: document.querySelector("#install-instructions"),
+  closeInstall: document.querySelector("#close-install"),
+  networkStatus: document.querySelector("#network-status"),
 };
 
 const state = { medicines: [], filtered: [], page: 1, query: "", sort: "name-asc" };
@@ -286,5 +291,67 @@ elements.next.addEventListener("click", () => {
   update();
   document.querySelector("#main-content").scrollIntoView({ behavior: "smooth" });
 });
+
+function isStandalone() {
+  return window.matchMedia("(display-mode: standalone)").matches
+    || window.navigator.standalone === true;
+}
+
+function isIos() {
+  return /iphone|ipad|ipod/i.test(window.navigator.userAgent)
+    || (window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
+}
+
+function updateNetworkStatus() {
+  elements.networkStatus.hidden = window.navigator.onLine;
+}
+
+let installPrompt;
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  installPrompt = event;
+  if (!isStandalone()) elements.install.hidden = false;
+});
+
+window.addEventListener("appinstalled", () => {
+  installPrompt = undefined;
+  elements.install.hidden = true;
+  elements.installDialog.close();
+});
+
+elements.install.addEventListener("click", async () => {
+  if (installPrompt) {
+    await installPrompt.prompt();
+    const choice = await installPrompt.userChoice;
+    if (choice.outcome === "accepted") elements.install.hidden = true;
+    installPrompt = undefined;
+    return;
+  }
+
+  elements.installInstructions.innerHTML = isIos()
+    ? "<p>Öffne diese Seite gegebenenfalls in Safari. Tippe dort auf <strong>Teilen</strong> <span aria-hidden=\"true\">□↑</span> und anschließend auf <strong>Zum Home-Bildschirm</strong>.</p>"
+    : "<p>Öffne das Browsermenü und wähle <strong>App installieren</strong> oder <strong>Zum Startbildschirm hinzufügen</strong>.</p>";
+  elements.installDialog.showModal();
+});
+
+elements.closeInstall.addEventListener("click", () => elements.installDialog.close());
+elements.installDialog.addEventListener("click", (event) => {
+  if (event.target === elements.installDialog) elements.installDialog.close();
+});
+
+window.addEventListener("online", updateNetworkStatus);
+window.addEventListener("offline", updateNetworkStatus);
+updateNetworkStatus();
+
+if (isIos() && !isStandalone()) elements.install.hidden = false;
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch((error) => {
+      console.error("Service Worker konnte nicht registriert werden:", error);
+    });
+  });
+}
 
 load();

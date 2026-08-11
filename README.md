@@ -2,6 +2,11 @@
 
 Eine schnelle, barrierearme Suche in den zentral zugelassenen Humanarzneimitteln der European Medicines Agency (EMA).
 
+Die Anwendung ist als Progressive Web App (PWA) installierbar. Auf unterstützten
+Android-Browsern erscheint eine direkte Installationsoption; auf iPhone und iPad
+führt eine kurze Anleitung über „Zum Home-Bildschirm“. Die letzte erfolgreich
+geladene Arzneimittelliste bleibt für die Offline-Suche verfügbar.
+
 ## Datenumfang
 
 Die Anwendung zeigt ausschließlich Datensätze, deren Werte nach Entfernung von Leerzeichen und unabhängig von Groß-/Kleinschreibung den folgenden Bedingungen entsprechen:
@@ -26,3 +31,7 @@ npm run serve
 ```
 
 Die Anwendung ist ein statisches Projekt ohne Laufzeit-Abhängigkeiten.
+
+Für einen vollständigen PWA-Test muss sie über `http://localhost` oder HTTPS
+aufgerufen werden. Beim ersten Online-Aufruf werden Oberfläche und EMA-Datensatz
+lokal zwischengespeichert.

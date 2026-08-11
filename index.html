@@ -7,22 +7,35 @@
       name="description"
       content="Schnelle Suche in den zentral zugelassenen Humanarzneimitteln der EMA."
     />
+    <meta name="theme-color" content="#071a3d" />
+    <meta name="application-name" content="EMA Arzneimittelsuche" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="EMA Suche" />
     <title>EMA Arzneimittelsuche</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="app.js"></script>
+    <link rel="stylesheet" href="styles.css?v=2" />
+    <script type="module" src="app.js?v=2"></script>
   </head>
   <body>
     <header class="hero">
       <div class="hero__inner">
-        <a class="eyebrow" href="https://www.ema.europa.eu/" target="_blank" rel="noreferrer">
-          Datenquelle: European Medicines Agency
-        </a>
+        <div class="hero__topline">
+          <a class="eyebrow" href="https://www.ema.europa.eu/" target="_blank" rel="noreferrer">
+            Datenquelle: European Medicines Agency
+          </a>
+          <button class="install-button" type="button" id="install-app" hidden>
+            <span aria-hidden="true">↓</span> App installieren
+          </button>
+        </div>
         <h1>Europäisch zugelassene<br /><span>Arzneimittel</span></h1>
         <p class="intro">
           Durchsuche Handelsnamen, Wirkstoffe, Therapiegebiete und zugelassene
@@ -81,6 +94,21 @@
         <p>Bitte versuche es später erneut.</p>
       </section>
     </main>
+
+    <div class="network-status" id="network-status" role="status" hidden>
+      Offline – die zuletzt gespeicherten EMA-Daten werden verwendet.
+    </div>
+
+    <dialog class="install-dialog" id="install-dialog" aria-labelledby="install-title">
+      <button class="install-dialog__close" type="button" id="close-install" aria-label="Schließen">×</button>
+      <div class="install-dialog__icon" aria-hidden="true">EMA</div>
+      <h2 id="install-title">Als App installieren</h2>
+      <div id="install-instructions"></div>
+      <p class="install-dialog__note">
+        Die App bleibt mit der EMA-Datenquelle verbunden und zeigt offline den zuletzt
+        gespeicherten Datenstand an.
+      </p>
+    </dialog>
 
     <footer>
       <p>

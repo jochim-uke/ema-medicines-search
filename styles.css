@@ -46,12 +46,13 @@ a { color: inherit; }
 
 .hero__inner, .content, footer { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
 .hero__inner { position: relative; z-index: 1; padding: 54px 0 40px; }
+.hero__topline { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 34px; }
 
 .eyebrow {
   display: inline-flex;
   align-items: center;
   gap: .55rem;
-  margin-bottom: 34px;
+  margin-bottom: 0;
   color: #dce5f6;
   font-size: .78rem;
   font-weight: 700;
@@ -61,6 +62,21 @@ a { color: inherit; }
 }
 
 .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.install-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid rgba(255,255,255,.4);
+  border-radius: 999px;
+  color: white;
+  background: rgba(255,255,255,.08);
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.install-button:hover { border-color: var(--accent); background: rgba(255,90,157,.16); }
+.install-button:focus-visible { outline: 3px solid rgba(255,90,157,.55); outline-offset: 3px; }
 
 h1 {
   max-width: 800px;
@@ -159,6 +175,38 @@ footer { display: flex; justify-content: space-between; gap: 30px; padding: 28px
 footer p { max-width: 760px; margin: 0; }
 footer a { color: var(--teal); font-weight: 700; white-space: nowrap; }
 
+.network-status {
+  position: fixed;
+  z-index: 10;
+  right: 18px;
+  bottom: 18px;
+  max-width: min(390px, calc(100% - 36px));
+  padding: 11px 15px;
+  border: 1px solid #ffb5d3;
+  border-radius: 8px;
+  color: #4f1032;
+  background: #fff0f6;
+  box-shadow: var(--shadow);
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+.install-dialog {
+  width: min(440px, calc(100% - 32px));
+  padding: 30px;
+  border: 0;
+  border-radius: 16px;
+  color: var(--ink);
+  background: var(--surface);
+  box-shadow: 0 24px 80px rgba(7,26,61,.35);
+}
+.install-dialog::backdrop { background: rgba(7,26,61,.68); backdrop-filter: blur(3px); }
+.install-dialog__close { position: absolute; top: 12px; right: 14px; border: 0; color: var(--muted); background: transparent; font-size: 1.6rem; cursor: pointer; }
+.install-dialog__icon { display: grid; width: 58px; height: 58px; place-items: center; margin-bottom: 18px; border-radius: 14px; color: white; background: linear-gradient(145deg, #0a2857, #163d75); box-shadow: inset -8px -8px 0 rgba(255,90,157,.85); font-size: .77rem; font-weight: 700; letter-spacing: .08em; }
+.install-dialog h2 { margin: 0 0 12px; font-family: "Newsreader", Georgia, serif; font-size: 2rem; }
+.install-dialog p { color: #3f4e6d; line-height: 1.6; }
+.install-dialog__note { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--line); font-size: .78rem; }
+
 .skeleton { height: 124px; border-radius: 10px; background: linear-gradient(100deg, #ecebe4 20%, #faf8f1 40%, #ecebe4 60%); background-size: 200% 100%; animation: shimmer 1.3s infinite; }
 @keyframes shimmer { to { background-position-x: -200%; } }
 
@@ -170,7 +218,7 @@ footer a { color: var(--teal); font-weight: 700; white-space: nowrap; }
 @media (max-width: 580px) {
   .hero__inner, .content, footer { width: min(100% - 26px, 1120px); }
   .hero__inner { padding-top: 34px; }
-  .eyebrow { margin-bottom: 25px; }
+  .hero__topline { align-items: flex-start; flex-direction: column; gap: 16px; margin-bottom: 25px; }
   h1 { font-size: clamp(2.55rem, 14vw, 4rem); }
   .intro { font-size: .95rem; }
   .search__control { min-height: 56px; }
