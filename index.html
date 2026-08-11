@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Schnelle Suche in den zentral zugelassenen Humanarzneimitteln der EMA."
+    />
+    <title>EMA Arzneimittelsuche</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__inner">
+        <a class="eyebrow" href="https://www.ema.europa.eu/" target="_blank" rel="noreferrer">
+          Datenquelle: European Medicines Agency
+        </a>
+        <h1>Europäisch zugelassene<br /><span>Humanarzneimittel</span></h1>
+        <p class="intro">
+          Durchsuche Handelsnamen, Wirkstoffe, Therapiegebiete und zugelassene
+          Anwendungsgebiete – auf Basis der offiziellen EMA-Daten.
+        </p>
+
+        <form class="search" role="search" id="search-form">
+          <label for="search-input">Arzneimittel suchen</label>
+          <div class="search__control">
+            <span class="search__icon" aria-hidden="true"></span>
+            <input
+              id="search-input"
+              type="search"
+              autocomplete="off"
+              placeholder="z. B. Imatinib, Glivec oder Leukämie"
+            />
+            <button type="button" id="clear-search" hidden>Leeren</button>
+          </div>
+        </form>
+
+        <div class="meta" aria-live="polite">
+          <span id="result-count">Daten werden geladen …</span>
+          <span class="meta__divider" aria-hidden="true"></span>
+          <span id="data-date"></span>
+        </div>
+      </div>
+    </header>
+
+    <main class="content" id="main-content">
+      <section class="toolbar" aria-label="Ergebnisoptionen">
+        <p id="search-context">Alle zugelassenen Präparate</p>
+        <label>
+          Sortierung
+          <select id="sort-select">
+            <option value="name-asc">Name A–Z</option>
+            <option value="name-desc">Name Z–A</option>
+            <option value="inn-asc">Wirkstoff A–Z</option>
+          </select>
+        </label>
+      </section>
+
+      <section id="results" class="results" aria-live="polite" aria-busy="true"></section>
+      <nav class="pagination" aria-label="Seitennavigation" id="pagination" hidden>
+        <button type="button" id="previous-page">Zurück</button>
+        <span id="page-info"></span>
+        <button type="button" id="next-page">Weiter</button>
+      </nav>
+
+      <section class="empty" id="empty-state" hidden>
+        <p class="empty__title">Keine passenden Arzneimittel gefunden.</p>
+        <p>Versuche einen anderen Handelsnamen, Wirkstoff oder Suchbegriff.</p>
+      </section>
+
+      <section class="error" id="error-state" hidden>
+        <p class="empty__title">Die Daten konnten nicht geladen werden.</p>
+        <p>Bitte versuche es später erneut.</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Dieses unabhängige Suchwerkzeug dient ausschließlich Informationszwecken
+        und ersetzt keine medizinische Beratung. Maßgeblich sind die Angaben der EMA.
+      </p>
+      <a
+        href="https://www.ema.europa.eu/en/about-us/about-website/download-website-data-json-data-format"
+        target="_blank"
+        rel="noreferrer"
+      >Zur offiziellen Datenquelle</a>
+    </footer>
+  </body>
+</html>
