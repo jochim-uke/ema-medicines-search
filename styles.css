@@ -1,14 +1,15 @@
 :root {
   color-scheme: light;
-  --ink: #132c2a;
-  --muted: #55706d;
-  --paper: #f5f2e9;
-  --surface: #fffdf7;
-  --teal: #096b65;
-  --teal-dark: #064b47;
-  --line: #d6ddd7;
-  --accent: #d9e85f;
-  --shadow: 0 16px 40px rgba(19, 44, 42, 0.08);
+  --ink: #101f3f;
+  --muted: #5d6982;
+  --paper: #f4f6fb;
+  --surface: #ffffff;
+  --teal: #163d75;
+  --teal-dark: #0a2857;
+  --line: #d8deeb;
+  --accent: #ff5a9d;
+  --accent-soft: #ffe3ef;
+  --shadow: 0 16px 40px rgba(10, 40, 87, 0.1);
   font-family: "DM Sans", system-ui, sans-serif;
   color: var(--ink);
   background: var(--paper);
@@ -27,8 +28,8 @@ a { color: inherit; }
   overflow: hidden;
   color: white;
   background:
-    radial-gradient(circle at 82% 18%, rgba(217, 232, 95, 0.22), transparent 23rem),
-    linear-gradient(135deg, #064b47, #0a6e67);
+    radial-gradient(circle at 82% 18%, rgba(255, 90, 157, 0.27), transparent 23rem),
+    linear-gradient(135deg, #071a3d, #12396f);
 }
 
 .hero::after {
@@ -51,7 +52,7 @@ a { color: inherit; }
   align-items: center;
   gap: .55rem;
   margin-bottom: 34px;
-  color: #dfe9e1;
+  color: #dce5f6;
   font-size: .78rem;
   font-weight: 700;
   letter-spacing: .08em;
@@ -72,7 +73,7 @@ h1 {
 }
 
 h1 span { color: var(--accent); }
-.intro { max-width: 680px; margin: 25px 0 34px; color: #d9e5e2; font-size: 1.06rem; line-height: 1.65; }
+.intro { max-width: 680px; margin: 25px 0 34px; color: #dce5f6; font-size: 1.06rem; line-height: 1.65; }
 .search { max-width: 800px; }
 .search > label { display: block; margin-bottom: 9px; font-size: .8rem; font-weight: 700; letter-spacing: .04em; }
 .search__control { display: flex; align-items: center; min-height: 62px; padding: 0 10px 0 21px; border-radius: 10px; background: white; box-shadow: 0 12px 30px rgba(0,0,0,.16); }
@@ -81,7 +82,7 @@ h1 span { color: var(--accent); }
 .search input { min-width: 0; flex: 1; border: 0; outline: 0; color: var(--ink); font-size: 1rem; background: transparent; }
 .search input::placeholder { color: #81918e; }
 .search button { border: 0; padding: 10px 12px; color: var(--teal); background: transparent; font-size: .84rem; font-weight: 700; cursor: pointer; }
-.meta { display: flex; align-items: center; gap: 13px; margin-top: 18px; color: #cbdad7; font-size: .82rem; }
+.meta { display: flex; align-items: center; gap: 13px; margin-top: 18px; color: #d3ddf0; font-size: .82rem; }
 .meta__divider { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 
 .content { padding: 34px 0 70px; }
@@ -106,10 +107,32 @@ h1 span { color: var(--accent); }
 .medicine:hover { border-color: #aebfba; box-shadow: var(--shadow); transform: translateY(-1px); transition: .18s ease; }
 .medicine h2 { margin: 0 0 5px; font-size: 1.06rem; line-height: 1.35; }
 .medicine__label { display: block; margin-bottom: 5px; color: var(--muted); font-size: .68rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
-.medicine__inn, .medicine__indication { margin: 0; color: #34504d; font-size: .9rem; line-height: 1.5; }
-.medicine__indication { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+.medicine__inn, .medicine__indication { margin: 0; color: #3f4e6d; font-size: .9rem; line-height: 1.58; }
+.medicine__details { margin-top: 9px; }
+.medicine__indication--preview { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+.medicine__indication--full { display: none; margin-top: 12px; white-space: pre-line; }
+.medicine__details[open] .medicine__indication--preview { display: none; }
+.medicine__details[open] .medicine__indication--full { display: block; }
+.medicine__details summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 9px;
+  color: #c92f73;
+  font-size: .77rem;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+.medicine__details summary::-webkit-details-marker { display: none; }
+.medicine__details summary::after { content: "+"; font-size: 1rem; line-height: 1; }
+.medicine__details[open] summary::after { content: "−"; }
+.summary__open { display: none; }
+.medicine__details[open] .summary__closed { display: none; }
+.medicine__details[open] .summary__open { display: inline; }
+.medicine__details summary:focus-visible { outline: 3px solid rgba(255, 90, 157, .35); outline-offset: 4px; border-radius: 3px; }
 .tags { display: flex; flex-wrap: wrap; gap: 5px; }
-.tag { padding: 5px 8px; border-radius: 999px; color: var(--teal-dark); background: #e5eeea; font-size: .72rem; font-weight: 600; }
+.tag { padding: 5px 8px; border-radius: 999px; color: #8d2051; background: var(--accent-soft); font-size: .72rem; font-weight: 600; }
 .medicine__link { display: inline-flex; align-items: center; gap: 7px; padding: 9px 12px; border: 1px solid var(--teal); border-radius: 7px; color: var(--teal); font-size: .78rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
 .medicine__link:hover { color: white; background: var(--teal); }
 .medicine__link::after { content: "↗"; }
