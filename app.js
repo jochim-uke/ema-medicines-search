@@ -48,6 +48,65 @@ function sortMedicines(medicines, sort) {
   );
 }
 
+function splitIndications(value) {
+  const text = String(value ?? "")
+    .replace("\ufeff", "")
+    .replace(/\u00a0/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/\be\.g\./gi, "for example")
+    .replace(/\bi\.e\./gi, "that is")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!text) return [];
+
+  const parts = [];
+  const boundary = /;|\.(?=[A-Za-z])|\.\s+/g;
+  let start = 0;
+  let match;
+
+  while ((match = boundary.exec(text)) !== null) {
+    const isPeriod = match[0].startsWith(".");
+    const end = match.index + (isPeriod ? 1 : 0);
+    const part = text.slice(start, end).trim();
+    if (part) parts.push(part);
+    start = match.index + match[0].length;
+  }
+
+  const remainder = text.slice(start).trim();
+  if (remainder) parts.push(remainder);
+  return parts.length ? parts : [text];
+}
+
+function appendHighlightedText(container, text, query) {
+  const terms = String(query ?? "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .sort((a, b) => b.length - a.length);
+
+  if (!terms.length) {
+    container.textContent = text;
+    return;
+  }
+
+  const escapedTerms = [...new Set(terms)]
+    .map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const matcher = new RegExp(`(${escapedTerms.join("|")})`, "gi");
+
+  for (const part of String(text).split(matcher)) {
+    if (!part) continue;
+    if (terms.some((term) => term.toLocaleLowerCase("de") === part.toLocaleLowerCase("de"))) {
+      const mark = document.createElement("mark");
+      mark.className = "search-highlight";
+      mark.textContent = part;
+      container.append(mark);
+    } else {
+      container.append(document.createTextNode(part));
+    }
+  }
+}
+
 function medicineCard(medicine) {
   const article = document.createElement("article");
   article.className = "medicine";
@@ -92,11 +151,15 @@ function medicineCard(medicine) {
 
     const preview = document.createElement("p");
     preview.className = "medicine__indication medicine__indication--preview";
-    preview.textContent = medicine.indication;
+    appendHighlightedText(preview, medicine.indication, state.query);
 
-    const fullIndication = document.createElement("p");
+    const fullIndication = document.createElement("div");
     fullIndication.className = "medicine__indication medicine__indication--full";
-    fullIndication.textContent = medicine.indication;
+    for (const indicationPart of splitIndications(medicine.indication)) {
+      const paragraph = document.createElement("p");
+      appendHighlightedText(paragraph, indicationPart, state.query);
+      fullIndication.append(paragraph);
+    }
 
     indicationDetails.append(preview, summary, fullIndication);
     details.append(indicationDetails);
