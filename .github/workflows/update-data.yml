@@ -25,7 +25,7 @@ jobs:
         run: node scripts/build-data.mjs
       - name: Commit changed data
         run: |
-          if git diff --quiet -- data/medicines.json; then
+          if [ -z "$(git status --porcelain -- data/medicines.json)" ]; then
             echo "EMA data unchanged"
             exit 0
           fi
