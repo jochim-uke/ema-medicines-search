@@ -75,10 +75,37 @@ function medicineCard(medicine) {
     tag.textContent = area;
     tags.append(tag);
   }
-  const indication = document.createElement("p");
-  indication.className = "medicine__indication";
-  indication.textContent = medicine.indication || "Keine Indikation angegeben.";
-  details.append(areasLabel, tags, indication);
+  details.append(areasLabel, tags);
+
+  if (medicine.indication) {
+    const indicationDetails = document.createElement("details");
+    indicationDetails.className = "medicine__details";
+
+    const summary = document.createElement("summary");
+    const closedLabel = document.createElement("span");
+    closedLabel.className = "summary__closed";
+    closedLabel.textContent = "Vollständige Indikation anzeigen";
+    const openLabel = document.createElement("span");
+    openLabel.className = "summary__open";
+    openLabel.textContent = "Indikation einklappen";
+    summary.append(closedLabel, openLabel);
+
+    const preview = document.createElement("p");
+    preview.className = "medicine__indication medicine__indication--preview";
+    preview.textContent = medicine.indication;
+
+    const fullIndication = document.createElement("p");
+    fullIndication.className = "medicine__indication medicine__indication--full";
+    fullIndication.textContent = medicine.indication;
+
+    indicationDetails.append(preview, summary, fullIndication);
+    details.append(indicationDetails);
+  } else {
+    const indication = document.createElement("p");
+    indication.className = "medicine__indication";
+    indication.textContent = "Keine Indikation angegeben.";
+    details.append(indication);
+  }
 
   const link = document.createElement("a");
   link.className = "medicine__link";
