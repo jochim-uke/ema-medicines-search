@@ -77,6 +77,9 @@ a { color: inherit; }
 }
 .install-button:hover { border-color: var(--accent); background: rgba(255,90,157,.16); }
 .install-button:focus-visible { outline: 3px solid rgba(255,90,157,.55); outline-offset: 3px; }
+.tool-home { display: inline-flex; align-items: center; gap: 7px; margin-left: auto; padding: 9px 13px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; color: white; background: rgba(255,255,255,.08); font-size: .78rem; font-weight: 700; text-decoration: none; }
+.tool-home:hover { border-color: var(--accent); background: rgba(255,90,157,.16); }
+.tool-home:focus-visible { outline: 3px solid rgba(255,90,157,.55); outline-offset: 3px; }
 
 h1 {
   max-width: 800px;
@@ -219,6 +222,7 @@ footer a { color: var(--teal); font-weight: 700; white-space: nowrap; }
   .hero__inner, .content, footer { width: min(100% - 26px, 1120px); }
   .hero__inner { padding-top: 34px; }
   .hero__topline { align-items: flex-start; flex-direction: column; gap: 16px; margin-bottom: 25px; }
+  .tool-home { margin-left: 0; }
   h1 { font-size: clamp(2.55rem, 14vw, 4rem); }
   .intro { font-size: .95rem; }
   .search__control { min-height: 56px; }
