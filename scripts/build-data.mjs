@@ -16,6 +16,30 @@ export function isIncludedMedicine(record) {
     normalize(record?.medicine_status) === "authorised";
 }
 
+export function splitList(value) {
+  return String(value ?? "")
+    .split(";")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+export function transformRecord(record) {
+  return {
+    name: String(record.name_of_medicine ?? "").trim(),
+    inn: String(
+      record.international_non_proprietary_name_common_name ?? "",
+    ).trim(),
+    groups: splitList(record.pharmacotherapeutic_group_human),
+    areas: splitList(record.therapeutic_area_mesh),
+    indication: String(record.therapeutic_indication ?? "").trim(),
+    holder: String(
+      record.marketing_authorisation_developer_applicant_holder ?? "",
+    ).trim(),
+    authorisationDate: String(record.marketing_authorisation_date ?? "").trim(),
+    url: String(record.medicine_url ?? "").trim(),
+  };
+}
+
 export function transformPayload(payload) {
   if (!payload || !Array.isArray(payload.data)) {
     throw new Error("EMA response does not contain a data array.");
@@ -23,18 +47,7 @@ export function transformPayload(payload) {
 
   const medicines = payload.data
     .filter(isIncludedMedicine)
-    .map((record) => ({
-      name: String(record.name_of_medicine ?? "").trim(),
-      inn: String(
-        record.international_non_proprietary_name_common_name ?? "",
-      ).trim(),
-      areas: String(record.therapeutic_area_mesh ?? "")
-        .split(";")
-        .map((value) => value.trim())
-        .filter(Boolean),
-      indication: String(record.therapeutic_indication ?? "").trim(),
-      url: String(record.medicine_url ?? "").trim(),
-    }))
+    .map(transformRecord)
     .filter((record) => record.name && record.url)
     .sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }));
 
