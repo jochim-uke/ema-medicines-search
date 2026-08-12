@@ -14,7 +14,11 @@ Die Anwendung zeigt ausschließlich Datensätze, deren Werte nach Entfernung von
 - `category = Human`
 - `medicine_status = Authorised`
 
-Ausgegeben und durchsucht werden Handelsname, INN/Common Name, therapeutische MeSH-Gebiete und therapeutische Indikation. Jeder Treffer verlinkt auf die originale EMA-Seite.
+Ausgegeben und durchsucht werden Handelsname, INN/Common Name,
+pharmakotherapeutische Gruppe, therapeutische MeSH-Gebiete und therapeutische
+Indikation. In der aufgeklappten Karte erscheinen zusätzlich der
+Zulassungsinhaber beziehungsweise Antragsteller und das Zulassungsdatum. Jeder
+Treffer verlinkt auf die originale EMA-Seite.
 
 ## Aktualisierung
 
