@@ -12,6 +12,13 @@ test("medicine cards use pharmacotherapeutic groups and expanded EMA metadata", 
   assert.match(app, /Datum der Zulassung/);
 });
 
+test("marketing authorisation holders are included in the search index", async () => {
+  const app = await readFile(new URL("app.js", root), "utf8");
+  const searchFunction = app.match(/function matchesQuery[\s\S]+?^}/m)?.[0] || "";
+  assert.match(searchFunction, /medicine\.holder/);
+  assert.match(app, /appendHighlightedText\(\s*holderText,\s*medicine\.holder/s);
+});
+
 test("the whole card toggles an accessible expanded region", async () => {
   const app = await readFile(new URL("app.js", root), "utf8");
   assert.match(app, /toggle\.className = "medicine__toggle"/);

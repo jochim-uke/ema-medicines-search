@@ -1,9 +1,9 @@
-const CACHE_NAME = "ema-search-v3";
+const CACHE_NAME = "ema-search-v5";
 const CORE_ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=3",
-  "./app.js?v=3",
+  "./styles.css?v=5",
+  "./app.js?v=5",
   "./manifest.webmanifest",
   "./icons/icon.svg",
   "./icons/icon-maskable.svg",
